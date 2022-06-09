@@ -112,6 +112,7 @@ list.addEventListener("click", evt => {
      }
 });
 
+const findUrl = str => str.split(' ').map(e => e.substr(2, (e.length-4) ).includes('.') || (e.substr(0, 5).includes('t.me/') && e.length>=10 )  ? `<a target='_blank' class='url' href='http://${e}'>${e}</a>` : e).join(' ')
 
 function renderTodos(arr, element){
     element.innerHTML = "";
@@ -119,8 +120,11 @@ function renderTodos(arr, element){
     arr.forEach(todo => {
         const createdItem = document.createElement("li");
         createdItem.classList.add("list__item");
-        createdItem.textContent = todo.title;
         element.appendChild(createdItem);
+
+        const createdItemTitle = document.createElement('span');
+        createdItemTitle.innerHTML = findUrl(todo.title);
+        createdItem.appendChild(createdItemTitle);
 
         const newContainer = document.createElement("div");
         newContainer.classList.add("new__container");
